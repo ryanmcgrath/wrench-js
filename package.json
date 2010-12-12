@@ -1,8 +1,8 @@
 {
 	"name": "wrench", 
 	"description": "Recursive filesystem operations that Node *should* have.",
-	"version": "1.0",
-	"author": "Ryan McGrath",
+	"version": "0.1.0",
+	"author": "Ryan McGrath <ryan@venodesigns.net>",
 	
 	"repository": { 
 		"type" : "git",
@@ -27,10 +27,6 @@
 	
 	"engines": { 
 		"node": ">=0.1.97",
-	},
-	
-	"dependencies": { 
-		"libxmljs" : "*",
 	},
 	
 	"licenses": [ 
