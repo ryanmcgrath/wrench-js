@@ -31,5 +31,5 @@
 	
 	"licenses": [ 
 		{"type" : "MIT", "url" : "http://github.com/ryanmcgrath/wrench-js/raw/master/LICENSE"}   
- 	],
+ 	]
 }
