@@ -1,35 +1,32 @@
 {
-	"name": "wrench", 
-	"description": "Recursive filesystem operations that Node *should* have.",
-	"version": "0.1.0",
-	"author": "Ryan McGrath <ryan@venodesigns.net>",
-	
-	"repository": { 
-		"type" : "git",
-		"url": "https://ryanmcgrath@github.com/ryanmcgrath/wrench-js.git",
-	},
-	
-	"bugs": { 
-		"web": "http://github.com/ryanmcgrath/wrench-js/issues", 
-	},
-	
-	"os": [ 
-		"linux", 
-		"darwin", 
-		"freebsd",
-	],
-	
-	"directories": { 
-		"lib": "./lib/", 
-	},
-	
-	"main": "./lib/wrench",
-	
-	"engines": { 
-		"node": ">=0.1.97",
-	},
-	
-	"licenses": [ 
-		{"type" : "MIT", "url" : "http://github.com/ryanmcgrath/wrench-js/raw/master/LICENSE"}   
- 	]
+  "name": "wrench",
+  "description": "Recursive filesystem operations that Node *should* have.",
+  "version": "0.1.0",
+  "author": "Ryan McGrath <ryan@venodesigns.net>",
+
+  "repository": {
+    "type" : "git",
+    "url": "https://ryanmcgrath@github.com/ryanmcgrath/wrench-js.git"
+  },
+
+  "bugs": {
+    "web": "http://github.com/ryanmcgrath/wrench-js/issues"
+  },
+
+  "os": [ "linux", "darwin", "freebsd" ],
+
+  "directories": {
+    "lib": "./lib/"
+  },
+
+  "main": "./lib/wrench",
+
+  "engines": { 
+    "node": ">=0.1.97"
+  },
+
+  "licenses": [{
+    "type" : "MIT",
+    "url" : "http://github.com/ryanmcgrath/wrench-js/raw/master/LICENSE"
+  }]
 }
