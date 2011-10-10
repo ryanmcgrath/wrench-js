@@ -16,7 +16,7 @@ Installation
 Usage
 -----------------------------------------------------------------------------
 ``` javascript
-var wrench = require('./wrench'),
+var wrench = require('wrench'),
 	util = require('util');
 
 // Recursively delete the entire sub-tree of a directory, then kill the directory
@@ -24,6 +24,9 @@ wrench.rmdirSyncRecursive('my_directory_name');
 
 // Recursively chmod the entire sub-tree of a directory
 wrench.chmodSyncRecursive('my_directory_name', 0755);
+
+// Recursively chown the entire sub-tree of a directory
+wrench.chownSyncRecursive("directory", uid, gid);
 
 // Deep-copy an existing directory
 wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end_up');
