@@ -19,6 +19,9 @@ Usage
 var wrench = require('wrench'),
 	util = require('util');
 
+// Recursively create directories, sub-trees and all.
+wrench.mkdirSyncRecursive(dir, 0777);
+
 // Recursively delete the entire sub-tree of a directory, then kill the directory
 wrench.rmdirSyncRecursive('my_directory_name');
 
