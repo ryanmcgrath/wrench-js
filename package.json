@@ -10,7 +10,7 @@
   },
 
   "bugs": {
-    "web": "http://github.com/ryanmcgrath/wrench-js/issues"
+    "url": "http://github.com/ryanmcgrath/wrench-js/issues"
   },
 
   "os": [ "linux", "darwin", "freebsd" ],
