@@ -23,7 +23,7 @@ var wrench = require('wrench'),
 wrench.mkdirSyncRecursive(dir, 0777);
 
 // Recursively delete the entire sub-tree of a directory, then kill the directory
-wrench.rmdirSyncRecursive('my_directory_name');
+wrench.rmdirSyncRecursive('my_directory_name', failSilently);
 
 // Recursively chmod the entire sub-tree of a directory
 wrench.chmodSyncRecursive('my_directory_name', 0755);
