@@ -4,7 +4,7 @@ var wrench = require('wrench');
 var path = require('path');
 
 module.exports = testCase({
-    testMkdirSyncRecursive: function(test) {
+    test_mkdirSyncRecursive: function(test) {
         var dir = __dirname + '/_tmp/foo/bar';
 
         test.equals(path.existsSync(dir), false, 'Dir shouldn\'t exist - clean it up manually?');
