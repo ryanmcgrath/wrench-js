@@ -1,6 +1,6 @@
 var testCase = require('nodeunit').testCase;
 var fs = require('fs');
-var wrench = require('wrench');
+var wrench = require('../lib/wrench');
 var path = require('path');
 
 module.exports = testCase({
