@@ -1,7 +1,8 @@
 var testCase = require('nodeunit').testCase;
 var fs = require('fs');
-var wrench = require('wrench');
+var wrench = require('../lib/wrench');
 var path = require('path');
+var _und = require("underscore");
 
 module.exports = testCase({
     test_readdirSyncRecursive: function(test) {
@@ -21,7 +22,9 @@ module.exports = testCase({
         var files = wrench.readdirSyncRecursive(dir);
 
         test.equals(files.length, check.length, 'number of paths is correct');
-        test.deepEqual(files, check, 'list shows all files and folders');
+        for (var filename in files) {
+                test.ok(_und.include(check, files[filename]));
+        }
 
         test.done();
     }
