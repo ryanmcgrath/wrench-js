@@ -19,6 +19,9 @@ Usage
 var wrench = require('wrench'),
 	util = require('util');
 
+// Synchronous operations
+//
+
 // Recursively create directories, sub-trees and all.
 wrench.mkdirSyncRecursive(dir, 0777);
 
@@ -42,7 +45,21 @@ var f = new wrench.LineReader('x.txt');
 while(f.hasNextLine()) {
 	util.puts(x.getNextLine());
 }
+
+
+// Asynchronous operations
+//
+
+// Recursively read directories contents
+var files = [];
+wrench.readdirRecursive('my_directory_name', function(error, curFiles) {
+    if (files) {
+        files = files.concat(curFiles);
+    } else {
+        // files list contains all the directory contents now
+    }
+});
+
 ```
-It should be noted that these are all currently synchronous operations. 
 
 Questions, comments? Hit me up. (ryan [at] venodesigns.net | http://twitter.com/ryanmcgrath)
