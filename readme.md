@@ -18,10 +18,10 @@ Usage
 ``` javascript
 var wrench = require('wrench'),
 	util = require('util');
+```
 
-// Synchronous operations
-//
-
+### Synchronous operations
+``` javascript
 // Recursively create directories, sub-trees and all.
 wrench.mkdirSyncRecursive(dir, 0777);
 
@@ -45,11 +45,10 @@ var f = new wrench.LineReader('x.txt');
 while(f.hasNextLine()) {
 	util.puts(x.getNextLine());
 }
+```
 
-
-// Asynchronous operations
-//
-
+### Asynchronous operations
+``` javascript
 // Recursively read directories contents
 var files = [];
 wrench.readdirRecursive('my_directory_name', function(error, curFiles) {
