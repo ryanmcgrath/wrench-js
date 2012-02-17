@@ -2,6 +2,6 @@
 // will run all the tests
 
 module.exports = {
-    group_mkdirSyncRecursive : require('./mkdirSyncRecursive'),
-    group_readdirSyncRecursive : require('./readdirSyncRecursive')
+    group_mkdir: require('./mkdir'),
+    group_readdir: require('./readdir')
 };
