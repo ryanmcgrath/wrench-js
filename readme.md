@@ -18,7 +18,10 @@ Usage
 ``` javascript
 var wrench = require('wrench'),
 	util = require('util');
+```
 
+### Synchronous operations
+``` javascript
 // Recursively create directories, sub-trees and all.
 wrench.mkdirSyncRecursive(dir, 0777);
 
@@ -43,6 +46,19 @@ while(f.hasNextLine()) {
 	util.puts(x.getNextLine());
 }
 ```
-It should be noted that these are all currently synchronous operations. 
+
+### Asynchronous operations
+``` javascript
+// Recursively read directories contents
+var files = [];
+wrench.readdirRecursive('my_directory_name', function(error, curFiles) {
+    if (files) {
+        files = files.concat(curFiles);
+    } else {
+        // files list contains all the directory contents now
+    }
+});
+
+```
 
 Questions, comments? Hit me up. (ryan [at] venodesigns.net | http://twitter.com/ryanmcgrath)
