@@ -52,11 +52,7 @@ while(f.hasNextLine()) {
 // Recursively read directories contents
 var files = [];
 wrench.readdirRecursive('my_directory_name', function(error, curFiles) {
-    if (files) {
-        files = files.concat(curFiles);
-    } else {
-        // files list contains all the directory contents now
-    }
+    // curFiles is what you want
 });
 
 ```
