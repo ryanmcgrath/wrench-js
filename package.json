@@ -31,7 +31,7 @@
     "node": ">=0.1.97"
   },
   
-  "scripts": { "test": "./node_modules/nodeunit/bin/nodeunit tests/runner.js" },
+  "scripts": { "test": "nodeunit tests/runner.js" },
 
   "licenses": [{
     "type" : "MIT",
