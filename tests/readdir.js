@@ -9,10 +9,10 @@ function checkResult(test, files) {
     var check = [
             'bar.txt',
             'foo',
-            'foo/bar',
-            'foo/dolor.md',
-            'foo/lorem.txt',
-            'foo/bar/ipsum.js'
+            path.join('foo', 'bar'),
+            path.join('foo', 'dolor.md'),
+            path.join('foo', 'lorem.txt'),
+            path.join('foo', 'bar', 'ipsum.js')
         ];
 
     test.equals(files.length, check.length, 'number of paths is correct');
@@ -26,7 +26,7 @@ function checkResult(test, files) {
 
 module.exports = testCase({
     test_readdirSyncRecursive: function(test) {
-        var dir = __dirname + '/readdir';
+        var dir = path.join(__dirname, 'readdir');
 
         test.ok(path.existsSync(dir), 'Folders should exist');
 
@@ -36,7 +36,7 @@ module.exports = testCase({
     },
 
     test_readdirRecursive: function(test) {
-        var dir = __dirname + '/readdir';
+        var dir = path.join(__dirname, 'readdir');
 
         test.ok(path.existsSync(dir), 'Folders should exist');
 
