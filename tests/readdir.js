@@ -2,7 +2,6 @@ var testCase = require('nodeunit').testCase;
 var fs = require('fs');
 var wrench = require('../lib/wrench');
 var path = require('path');
-var _und = require("underscore");
 
 
 function checkResult(test, files) {
@@ -15,11 +14,7 @@ function checkResult(test, files) {
             path.join('foo', 'bar', 'ipsum.js')
         ];
 
-    test.equals(files.length, check.length, 'number of paths is correct');
-
-    _und.each(check, function(it) {
-        test.ok(_und.include(files, it), 'path ' + it + ' should be returned');
-    });
+    test.deepEqual(files, check);
 
     test.done();
 }
