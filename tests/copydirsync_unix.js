@@ -40,7 +40,7 @@ module.exports = testCase({
         test.ok(path.existsSync(dir), 'Folders should exist');
 
         wrench.mkdirSyncRecursive(testdir, 0777);
-        wrench.copyDirSyncRecursive(dir, testdir, { excludeHidden: false });
+        wrench.copyDirSyncRecursive(dir, testdir, { excludeHiddenUnix: false });
 
         var files = wrench.readdirSyncRecursive(testdir);
 
@@ -57,7 +57,7 @@ module.exports = testCase({
         test.ok(path.existsSync(dir), 'Folders should exist');
 
         wrench.mkdirSyncRecursive(testdir, 0777);
-        wrench.copyDirSyncRecursive(dir, testdir, { excludeHidden: true });
+        wrench.copyDirSyncRecursive(dir, testdir, { excludeHiddenUnix: true });
 
         var files = wrench.readdirSyncRecursive(testdir);
 
