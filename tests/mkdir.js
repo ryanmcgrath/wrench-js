@@ -7,11 +7,11 @@ module.exports = testCase({
     test_mkdirSyncRecursive: function(test) {
         var dir = __dirname + '/_tmp/foo/bar';
 
-        test.equals(path.existsSync(dir), false, 'Dir shouldn\'t exist - clean it up manually?');
+        test.equals(fs.existsSync(dir), false, 'Dir shouldn\'t exist - clean it up manually?');
 
         wrench.mkdirSyncRecursive(dir, 0777);
 
-        test.equals(path.existsSync(dir), true, 'Dir should exist now');
+        test.equals(fs.existsSync(dir), true, 'Dir should exist now');
 
         // clean up
         while (dir != __dirname) {

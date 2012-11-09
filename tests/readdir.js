@@ -23,7 +23,7 @@ module.exports = testCase({
     test_readdirSyncRecursive: function(test) {
         var dir = path.join(__dirname, 'readdir');
 
-        test.ok(path.existsSync(dir), 'Folders should exist');
+        test.ok(fs.existsSync(dir), 'Folders should exist');
 
         var files = wrench.readdirSyncRecursive(dir);
 
@@ -33,7 +33,7 @@ module.exports = testCase({
     test_readdirRecursive: function(test) {
         var dir = path.join(__dirname, 'readdir');
 
-        test.ok(path.existsSync(dir), 'Folders should exist');
+        test.ok(fs.existsSync(dir), 'Folders should exist');
 
         var allFiles = [];
 

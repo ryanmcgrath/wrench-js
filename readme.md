@@ -45,6 +45,10 @@ var f = new wrench.LineReader('x.txt');
 while(f.hasNextLine()) {
 	util.puts(x.getNextLine());
 }
+
+// Note: You will need to close that above line reader at some point, otherwise
+// you will run into a "too many open files" error. f.close() or fs.closeSync(f.fd) are
+// your friends, as only you know when it is safe to close.
 ```
 
 ### Asynchronous operations
@@ -54,7 +58,6 @@ var files = [];
 wrench.readdirRecursive('my_directory_name', function(error, curFiles) {
     // curFiles is what you want
 });
-
 ```
 
 Questions, comments? Hit me up. (ryan [at] venodesigns.net | http://twitter.com/ryanmcgrath)
