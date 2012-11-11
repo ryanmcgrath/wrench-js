@@ -32,6 +32,50 @@ function checkResultShown(test, files) {
     test.deepEqual(files, check);
 }
 
+function checkResultInflate(test, files) {
+    var check = [
+        '.hidden',
+        'bar.txt',
+        'test',
+        path.join('.hidden', 'dolor.md')
+    ];
+
+    test.deepEqual(files, check);
+
+    test.deepEqual(fs.lstatSync(path.join(__dirname, 'testdir/.hidden')).isSymbolicLink(), false);
+    test.deepEqual(fs.lstatSync(path.join(__dirname, 'testdir/bar.txt')).isSymbolicLink(), false);
+}
+
+function checkResultDontInflate(test, files) {
+    var check = [
+        '.hidden',
+        'bar.txt',
+        'test',
+        path.join('.hidden', 'dolor.md')
+    ];
+
+    test.deepEqual(files, check);
+
+    test.deepEqual(fs.lstatSync(path.join(__dirname, 'testdir/.hidden')).isSymbolicLink(), true);
+    test.deepEqual(fs.lstatSync(path.join(__dirname, 'testdir/bar.txt')).isSymbolicLink(), true);
+}
+
+function checkResultPreserveFiles(test, files) {
+    checkResultHidden(test, files);
+    var contents = fs.readFileSync(path.join(__dirname, path.join('testdir2', '.hidden.txt')), "utf8");
+    test.deepEqual(contents, 'hidden file');
+    contents = fs.readFileSync(path.join(__dirname, path.join('testdir2', 'bar.txt')), "utf8");
+    test.deepEqual(contents, 'shown file');
+}
+
+function checkResultOverwriteFiles(test, files) {
+    checkResultHidden(test, files);
+    var contents = fs.readFileSync(path.join(__dirname, path.join('testdir2', '.hidden.txt')), "utf8");
+    test.deepEqual(contents, 'just some text for .hidden.txt');
+    contents = fs.readFileSync(path.join(__dirname, path.join('testdir2', 'bar.txt')), "utf8");
+    test.deepEqual(contents, 'just some text for bar.txt');
+}
+
 module.exports = testCase({
     test_copyDirSyncRecursiveHidden: function(test) {
         var dir = path.join(__dirname, 'shown');
@@ -66,7 +110,92 @@ module.exports = testCase({
         wrench.rmdirSyncRecursive(testdir);
 
         test.done();
+    },
+    test_copyDirSyncRecursiveInflate: function(test) {
+        var dir = path.join(__dirname, 'withsymlinks');
+        var testdir = path.join(__dirname, 'testdir');
+
+        test.ok(path.existsSync(dir), 'Folders should exist');
+
+        wrench.mkdirSyncRecursive(testdir, 0777);
+        wrench.copyDirSyncRecursive(dir, testdir, { excludeHiddenUnix: false, inflateSymlinks: true });
+
+        var files = wrench.readdirSyncRecursive(testdir);
+
+        checkResultInflate(test, files);
+
+        wrench.rmdirSyncRecursive(testdir);
+
+        test.done();
+    },
+    test_copyDirSyncRecursiveDontInflate: function(test) {
+        var dir = path.join(__dirname, 'withsymlinks');
+        var testdir = path.join(__dirname, 'testdir');
+
+        test.ok(path.existsSync(dir), 'Folders should exist');
+
+        wrench.mkdirSyncRecursive(testdir, 0777);
+        wrench.copyDirSyncRecursive(dir, testdir, { excludeHiddenUnix: false, inflateSymlinks: false });
+
+        var files = wrench.readdirSyncRecursive(testdir);
+
+        checkResultDontInflate(test, files);
+
+        wrench.rmdirSyncRecursive(testdir);
+
+        test.done();
+    },
+    test_copyDirSyncRecursivePreserveFiles: function(test) {
+        var dir = path.join(__dirname, 'shown'),
+            testdir1 = path.join(__dirname, 'testdir1'),
+            testdir2 = path.join(__dirname, 'testdir2');
+
+        test.ok(path.existsSync(dir), 'Folders should exist');
+
+        wrench.mkdirSyncRecursive(testdir1, 0777);
+        wrench.copyDirSyncRecursive(dir, testdir1, { excludeHiddenUnix: false });
+        wrench.copyDirSyncRecursive(dir, testdir2, { excludeHiddenUnix: false });
+
+        fs.writeFileSync(path.join(testdir1, ".hidden.txt"), 'just some text for .hidden.txt');
+        fs.writeFileSync(path.join(testdir1, "bar.txt"), 'just some text for bar.txt');
+
+        wrench.copyDirSyncRecursive(testdir1, testdir2, { preserve: true, excludeHiddenUnix: false, preserveFiles: true });
+
+        var files = wrench.readdirSyncRecursive(testdir2);
+
+        checkResultPreserveFiles(test, files);
+
+        wrench.rmdirSyncRecursive(testdir1);
+        wrench.rmdirSyncRecursive(testdir2);
+
+        test.done();
+    },
+    test_copyDirSyncRecursiveOverwriteFiles: function(test) {
+        var dir = path.join(__dirname, 'shown'),
+            testdir1 = path.join(__dirname, 'testdir1'),
+            testdir2 = path.join(__dirname, 'testdir2');
+
+        test.ok(path.existsSync(dir), 'Folders should exist');
+
+        wrench.mkdirSyncRecursive(testdir1, 0777);
+        wrench.copyDirSyncRecursive(dir, testdir1, { excludeHiddenUnix: false });
+        wrench.copyDirSyncRecursive(dir, testdir2, { excludeHiddenUnix: false });
+
+        fs.writeFileSync(path.join(testdir1, ".hidden.txt"), 'just some text for .hidden.txt');
+        fs.writeFileSync(path.join(testdir1, "bar.txt"), 'just some text for bar.txt');
+
+        wrench.copyDirSyncRecursive(testdir1, testdir2, { preserve: true, excludeHiddenUnix: false, preserveFiles: false });
+
+        var files = wrench.readdirSyncRecursive(testdir2);
+
+        checkResultOverwriteFiles(test, files);
+
+        wrench.rmdirSyncRecursive(testdir1);
+        wrench.rmdirSyncRecursive(testdir2);
+
+        test.done();
     }
+
 });
 
 // vim: et ts=4 sw=4
