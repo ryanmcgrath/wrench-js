@@ -77,6 +77,15 @@ function checkResultOverwriteFiles(test, files) {
 }
 
 module.exports = testCase({
+    test_copyDirSyncRecursiveWithoutOptions: function(test) {
+        var dir = path.join(__dirname, 'shown');
+        var testdir = path.join(__dirname, 'testdir');
+
+        wrench.copyDirSyncRecursive(dir, testdir);
+
+        wrench.rmdirSyncRecursive(testdir);
+        test.done();
+    },
     test_copyDirSyncRecursiveHidden: function(test) {
         var dir = path.join(__dirname, 'shown');
         var testdir = path.join(__dirname, 'testdir');
