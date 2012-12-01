@@ -90,7 +90,7 @@ module.exports = testCase({
         var dir = path.join(__dirname, 'shown');
         var testdir = path.join(__dirname, 'testdir');
 
-        test.ok(path.existsSync(dir), 'Folders should exist');
+        test.ok(fs.existsSync(dir), 'Folders should exist');
 
         wrench.mkdirSyncRecursive(testdir, 0777);
         wrench.copyDirSyncRecursive(dir, testdir, { excludeHiddenUnix: false });
@@ -107,7 +107,7 @@ module.exports = testCase({
         var dir = path.join(__dirname, 'shown');
         var testdir = path.join(__dirname, 'testdir');
 
-        test.ok(path.existsSync(dir), 'Folders should exist');
+        test.ok(fs.existsSync(dir), 'Folders should exist');
 
         wrench.mkdirSyncRecursive(testdir, 0777);
         wrench.copyDirSyncRecursive(dir, testdir, { excludeHiddenUnix: true });
@@ -124,7 +124,7 @@ module.exports = testCase({
         var dir = path.join(__dirname, 'withsymlinks');
         var testdir = path.join(__dirname, 'testdir');
 
-        test.ok(path.existsSync(dir), 'Folders should exist');
+        test.ok(fs.existsSync(dir), 'Folders should exist');
 
         wrench.mkdirSyncRecursive(testdir, 0777);
         wrench.copyDirSyncRecursive(dir, testdir, { excludeHiddenUnix: false, inflateSymlinks: true });
@@ -141,7 +141,7 @@ module.exports = testCase({
         var dir = path.join(__dirname, 'withsymlinks');
         var testdir = path.join(__dirname, 'testdir');
 
-        test.ok(path.existsSync(dir), 'Folders should exist');
+        test.ok(fs.existsSync(dir), 'Folders should exist');
 
         wrench.mkdirSyncRecursive(testdir, 0777);
         wrench.copyDirSyncRecursive(dir, testdir, { excludeHiddenUnix: false, inflateSymlinks: false });
@@ -159,7 +159,7 @@ module.exports = testCase({
             testdir1 = path.join(__dirname, 'testdir1'),
             testdir2 = path.join(__dirname, 'testdir2');
 
-        test.ok(path.existsSync(dir), 'Folders should exist');
+        test.ok(fs.existsSync(dir), 'Folders should exist');
 
         wrench.mkdirSyncRecursive(testdir1, 0777);
         wrench.copyDirSyncRecursive(dir, testdir1, { excludeHiddenUnix: false });
@@ -184,7 +184,7 @@ module.exports = testCase({
             testdir1 = path.join(__dirname, 'testdir1'),
             testdir2 = path.join(__dirname, 'testdir2');
 
-        test.ok(path.existsSync(dir), 'Folders should exist');
+        test.ok(fs.existsSync(dir), 'Folders should exist');
 
         wrench.mkdirSyncRecursive(testdir1, 0777);
         wrench.copyDirSyncRecursive(dir, testdir1, { excludeHiddenUnix: false });
