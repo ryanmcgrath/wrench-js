@@ -43,7 +43,7 @@ wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end
 // Read lines in from a file until you hit the end
 var f = new wrench.LineReader('x.txt');
 while(f.hasNextLine()) {
-	util.puts(x.getNextLine());
+	util.puts(f.getNextLine());
 }
 
 // Note: You will need to close that above line reader at some point, otherwise
