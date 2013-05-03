@@ -38,7 +38,14 @@ wrench.chmodSyncRecursive('my_directory_name', 0755);
 wrench.chownSyncRecursive("directory", uid, gid);
 
 // Deep-copy an existing directory
-wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end_up');
+wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end_up', {
+    forceDelete: bool, // Whether to overwrite existing directory or not
+    excludeHiddenUnix: bool, // Whether to copy hidden Unix files or not (preceding .)
+    preserveFiles: bool, // If we're overwriting something and the file already exists, keep the existing
+    inflateSymlinks: bool, // Whether to follow symlinks or not when copying files
+    filter: regexp, // A filter to match files against; if matches, do nothing (exclude).
+    whitelist: bool, // if true every file or directory which doesn't match filter will be ignored
+});
 
 // Read lines in from a file until you hit the end
 var f = new wrench.LineReader('x.txt');
@@ -58,6 +65,9 @@ var files = [];
 wrench.readdirRecursive('my_directory_name', function(error, curFiles) {
     // curFiles is what you want
 });
+
+// If you're feeling somewhat masochistic
+wrench.copyDirRecursive(srcDir, newDir, {forceDelete: bool /* See sync version */}, callbackfn);
 ```
 
 Questions, comments? Hit me up. (ryan [at] venodesigns.net | http://twitter.com/ryanmcgrath)
