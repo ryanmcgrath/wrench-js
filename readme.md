@@ -29,6 +29,7 @@ happen to find bugs in the 1.5.0 release please feel free to file them on the
 GitHub issues tracker for this project, or send me a pull request and I'll get to
 it as fast as I can. Thanks!
 
+**If this breaks enough projects I will consider rolling it back. Please hit me up if this seems to be the case.**
 
 Installation
 -----------------------------------------------------------------------------
