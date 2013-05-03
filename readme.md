@@ -8,6 +8,28 @@ That said, here's my attempt at a re-usable solution, at least until something
 more formalized gets integrated into Node.js (*hint hint*). wrench.js is fairly simple
 to use - check out the documentation/examples below:
 
+Possibly Breaking Change in v1.5.0
+-----------------------------------------------------------------------------
+In previous versions of Wrench, we went against the OS-default behavior of not
+deleting a directory unless the operation is forced. In 1.5.0, this has been
+changed to be the behavior people expect there to be - if you try to copy over
+a directory that already exists, you'll get an Error returned or thrown stating
+that you need to force it.
+
+Something like this will do the trick:
+
+``` javascript
+wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end_up', {
+    forceDelete: true
+});
+```
+
+If you desire the older behavior of Wrench... hit up your package.json. If you
+happen to find bugs in the 1.5.0 release please feel free to file them on the 
+GitHub issues tracker for this project, or send me a pull request and I'll get to
+it as fast as I can. Thanks!
+
+
 Installation
 -----------------------------------------------------------------------------
 
