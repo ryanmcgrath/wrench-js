@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wrench-js by ryanmcgrath</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/ryanmcgrath/wrench-js">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/ryanmcgrath/wrench-js/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/ryanmcgrath/wrench-js/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Wrench-js</h1>
+          <p>Recursive file operations in Node.js</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/ryanmcgrath">ryanmcgrath</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h2>wrench.js - Recursive file operations in Node.js</h2>
+
+<p>While I love Node.js, I've found myself missing some functions. Things like
+recursively deleting/chmodding a directory (or even deep copying a directory),
+or even a basic line reader, shouldn't need to be re-invented time and time again.</p>
+
+<p>That said, here's my attempt at a re-usable solution, at least until something
+more formalized gets integrated into Node.js (*hint hint*). wrench.js is fairly simple
+to use - check out the documentation/examples below:</p>
+
+<h2>Possibly Breaking Change in v1.5.0</h2>
+
+<p>In previous versions of Wrench, we went against the OS-default behavior of not
+deleting a directory unless the operation is forced. In 1.5.0, this has been
+changed to be the behavior people expect there to be - if you try to copy over
+a directory that already exists, you'll get an Error returned or thrown stating
+that you need to force it.</p>
+
+<p>Something like this will do the trick:</p>
+
+<div class="highlight"><pre><span class="nx">wrench</span><span class="p">.</span><span class="nx">copyDirSyncRecursive</span><span class="p">(</span><span class="s1">'directory_to_copy'</span><span class="p">,</span> <span class="s1">'location_where_copy_should_end_up'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">forceDelete</span><span class="o">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>If you desire the older behavior of Wrench... hit up your package.json. If you
+happen to find bugs in the 1.5.0 release please feel free to file them on the 
+GitHub issues tracker for this project, or send me a pull request and I'll get to
+it as fast as I can. Thanks!</p>
+
+<p><strong>If this breaks enough projects I will consider rolling it back. Please hit me up if this seems to be the case.</strong></p>
+
+<h2>Installation</h2>
+
+<pre><code>npm install wrench
+</code></pre>
+
+<h2>Usage</h2>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">wrench</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'wrench'</span><span class="p">),</span>
+    <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'util'</span><span class="p">);</span>
+</pre></div>
+
+<h3>Synchronous operations</h3>
+
+<div class="highlight"><pre><span class="c1">// Recursively create directories, sub-trees and all.</span>
+<span class="nx">wrench</span><span class="p">.</span><span class="nx">mkdirSyncRecursive</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="mi">0777</span><span class="p">);</span>
+
+<span class="c1">// Recursively delete the entire sub-tree of a directory, then kill the directory</span>
+<span class="nx">wrench</span><span class="p">.</span><span class="nx">rmdirSyncRecursive</span><span class="p">(</span><span class="s1">'my_directory_name'</span><span class="p">,</span> <span class="nx">failSilently</span><span class="p">);</span>
+
+<span class="c1">// Recursively read directories contents.</span>
+<span class="nx">wrench</span><span class="p">.</span><span class="nx">readdirSyncRecursive</span><span class="p">(</span><span class="s1">'my_directory_name'</span><span class="p">);</span>
+
+<span class="c1">// Recursively chmod the entire sub-tree of a directory</span>
+<span class="nx">wrench</span><span class="p">.</span><span class="nx">chmodSyncRecursive</span><span class="p">(</span><span class="s1">'my_directory_name'</span><span class="p">,</span> <span class="mi">0755</span><span class="p">);</span>
+
+<span class="c1">// Recursively chown the entire sub-tree of a directory</span>
+<span class="nx">wrench</span><span class="p">.</span><span class="nx">chownSyncRecursive</span><span class="p">(</span><span class="s2">"directory"</span><span class="p">,</span> <span class="nx">uid</span><span class="p">,</span> <span class="nx">gid</span><span class="p">);</span>
+
+<span class="c1">// Deep-copy an existing directory</span>
+<span class="nx">wrench</span><span class="p">.</span><span class="nx">copyDirSyncRecursive</span><span class="p">(</span><span class="s1">'directory_to_copy'</span><span class="p">,</span> <span class="s1">'location_where_copy_should_end_up'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">forceDelete</span><span class="o">:</span> <span class="nx">bool</span><span class="p">,</span> <span class="c1">// Whether to overwrite existing directory or not</span>
+    <span class="nx">excludeHiddenUnix</span><span class="o">:</span> <span class="nx">bool</span><span class="p">,</span> <span class="c1">// Whether to copy hidden Unix files or not (preceding .)</span>
+    <span class="nx">preserveFiles</span><span class="o">:</span> <span class="nx">bool</span><span class="p">,</span> <span class="c1">// If we're overwriting something and the file already exists, keep the existing</span>
+    <span class="nx">inflateSymlinks</span><span class="o">:</span> <span class="nx">bool</span><span class="p">,</span> <span class="c1">// Whether to follow symlinks or not when copying files</span>
+    <span class="nx">filter</span><span class="o">:</span> <span class="nx">regexp</span><span class="p">,</span> <span class="c1">// A filter to match files against; if matches, do nothing (exclude).</span>
+    <span class="nx">whitelist</span><span class="o">:</span> <span class="nx">bool</span><span class="p">,</span> <span class="c1">// if true every file or directory which doesn't match filter will be ignored</span>
+<span class="p">});</span>
+
+<span class="c1">// Read lines in from a file until you hit the end</span>
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">wrench</span><span class="p">.</span><span class="nx">LineReader</span><span class="p">(</span><span class="s1">'x.txt'</span><span class="p">);</span>
+<span class="k">while</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">hasNextLine</span><span class="p">())</span> <span class="p">{</span>
+    <span class="nx">util</span><span class="p">.</span><span class="nx">puts</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">getNextLine</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// Note: You will need to close that above line reader at some point, otherwise</span>
+<span class="c1">// you will run into a "too many open files" error. f.close() or fs.closeSync(f.fd) are</span>
+<span class="c1">// your friends, as only you know when it is safe to close.</span>
+</pre></div>
+
+<h3>Asynchronous operations</h3>
+
+<div class="highlight"><pre><span class="c1">// Recursively read directories contents</span>
+<span class="kd">var</span> <span class="nx">files</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="nx">wrench</span><span class="p">.</span><span class="nx">readdirRecursive</span><span class="p">(</span><span class="s1">'my_directory_name'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">curFiles</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// curFiles is what you want</span>
+<span class="p">});</span>
+
+<span class="c1">// If you're feeling somewhat masochistic</span>
+<span class="nx">wrench</span><span class="p">.</span><span class="nx">copyDirRecursive</span><span class="p">(</span><span class="nx">srcDir</span><span class="p">,</span> <span class="nx">newDir</span><span class="p">,</span> <span class="p">{</span><span class="nx">forceDelete</span><span class="o">:</span> <span class="nx">bool</span> <span class="cm">/* See sync version */</span><span class="p">},</span> <span class="nx">callbackfn</span><span class="p">);</span>
+</pre></div>
+
+<p>Questions, comments? Hit me up. (ryan [at] venodesigns.net | <a href="http://twitter.com/ryanmcgrath">http://twitter.com/ryanmcgrath</a>)</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-40660943-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
