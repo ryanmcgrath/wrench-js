@@ -69,7 +69,7 @@ wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end
     filter: regexpOrFunction, // A filter to match files against; if matches, do nothing (exclude).
     whitelist: bool, // if true every file or directory which doesn't match filter will be ignored
     include: regexpOrFunction, // An include filter (either a regexp or a function)
-    exclude: regexpOrFunction // An include filter (either a regexp or a function)
+    exclude: regexpOrFunction // An exclude filter (either a regexp or a function)
 });
 
 // Note: If a RegExp is provided then then it will be matched against the filename. If a function is
