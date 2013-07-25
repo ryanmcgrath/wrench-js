@@ -66,9 +66,15 @@ wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end
     excludeHiddenUnix: bool, // Whether to copy hidden Unix files or not (preceding .)
     preserveFiles: bool, // If we're overwriting something and the file already exists, keep the existing
     inflateSymlinks: bool, // Whether to follow symlinks or not when copying files
-    filter: regexp, // A filter to match files against; if matches, do nothing (exclude).
+    filter: regexpOrFunction, // A filter to match files against; if matches, do nothing (exclude).
     whitelist: bool, // if true every file or directory which doesn't match filter will be ignored
+    include: regexpOrFunction, // An include filter (either a regexp or a function)
+    exclude: regexpOrFunction // An include filter (either a regexp or a function)
 });
+
+*NOTE:* If a RegExp is provided then then it will be matched against the filename. If a function is
+        provided then the signature should be the following:
+        `function(filename, dir) { return result; }`
 
 // Read lines in from a file until you hit the end
 var f = new wrench.LineReader('x.txt');
