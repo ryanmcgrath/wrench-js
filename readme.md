@@ -72,9 +72,9 @@ wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end
     exclude: regexpOrFunction // An include filter (either a regexp or a function)
 });
 
-*NOTE:* If a RegExp is provided then then it will be matched against the filename. If a function is
-        provided then the signature should be the following:
-        `function(filename, dir) { return result; }`
+// Note: If a RegExp is provided then then it will be matched against the filename. If a function is
+//       provided then the signature should be the following:
+//       function(filename, dir) { return result; }
 
 // Read lines in from a file until you hit the end
 var f = new wrench.LineReader('x.txt');
