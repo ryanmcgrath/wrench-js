@@ -1,7 +1,7 @@
 {
   "name": "wrench",
   "description": "Recursive filesystem (and other) operations that Node *should* have.",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "author": "Ryan McGrath <ryan@venodesigns.net>",
 
   "repository": {
