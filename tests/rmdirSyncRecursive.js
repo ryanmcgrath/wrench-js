@@ -17,9 +17,9 @@ module.exports = testCase({
         fs.writeFileSync(f2Path, 'foo bar baz');
         fs.writeFileSync(f3Path, 'foo bar baz');
 
-        fs.chmodSync(f1Path, '777');
-        fs.chmodSync(f2Path, '777');
-        fs.chmodSync(f3Path, '777');
+        fs.chmodSync(f1Path, '444');
+        fs.chmodSync(f2Path, '444');
+        fs.chmodSync(f3Path, '444');
 
         test.equals(fs.existsSync(dir), true, 'Dir should exist - mkdirSyncRecursive not working?');
         test.equals(fs.existsSync(f1Path), true, 'File should exist');
@@ -51,9 +51,9 @@ module.exports = testCase({
         fs.writeFileSync(f2Path, 'foo bar baz');
         fs.writeFileSync(f3Path, 'foo bar baz');
 
-        fs.chmodSync(f1Path, '777');
-        fs.chmodSync(f2Path, '777');
-        fs.chmodSync(f3Path, '777');
+        fs.chmodSync(f1Path, '444');
+        fs.chmodSync(f2Path, '444');
+        fs.chmodSync(f3Path, '444');
 
         test.equals(fs.existsSync(dir), true, 'Dir should exist - mkdirSyncRecursive not working?');
         test.equals(fs.existsSync(f1Path), true, 'File should exist');
