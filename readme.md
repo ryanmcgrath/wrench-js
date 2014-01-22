@@ -65,6 +65,7 @@ wrench.copyDirSyncRecursive('directory_to_copy', 'location_where_copy_should_end
     forceDelete: bool, // Whether to overwrite existing directory or not
     excludeHiddenUnix: bool, // Whether to copy hidden Unix files or not (preceding .)
     preserveFiles: bool, // If we're overwriting something and the file already exists, keep the existing
+    preserveTimestamps: bool, // Preserve the mtime and atime when copying files
     inflateSymlinks: bool, // Whether to follow symlinks or not when copying files
     filter: regexpOrFunction, // A filter to match files against; if matches, do nothing (exclude).
     whitelist: bool, // if true every file or directory which doesn't match filter will be ignored
