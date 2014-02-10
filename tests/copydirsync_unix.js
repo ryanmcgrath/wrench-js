@@ -46,6 +46,21 @@ function checkResultInflate(test, files) {
     test.deepEqual(fs.lstatSync(path.join(__dirname, 'testdir/bar.txt')).isSymbolicLink(), false);
 }
 
+function checkResultInflateAbsolute(test, files) {
+    var check = [
+        '.hidden',
+        'absolute-bar.txt',
+        'bar.txt',
+        'test',
+        path.join('.hidden', 'dolor.md')
+    ];
+
+    test.deepEqual(files, check);
+
+    test.deepEqual(fs.lstatSync(path.join(__dirname, 'testdir/.hidden')).isSymbolicLink(), false);
+    test.deepEqual(fs.lstatSync(path.join(__dirname, 'testdir/bar.txt')).isSymbolicLink(), false);
+}
+
 function checkResultDontInflate(test, files) {
     var check = [
         '.hidden',
@@ -131,6 +146,27 @@ module.exports = testCase({
         checkResultInflate(test, files);
 
         wrench.rmdirSyncRecursive(testdir);
+
+        test.done();
+    },
+    test_copyDirSyncRecursiveInflateAbsoluteSymlinks: function(test) {
+        var dir = path.join(__dirname, 'withsymlinks');
+        var testdir = path.join(__dirname, 'testdir');
+
+        fs.symlinkSync(
+            path.resolve(__dirname, 'shown/bar.txt'),
+            path.join(dir, 'absolute-bar.txt')
+        );
+
+        wrench.mkdirSyncRecursive(testdir, 0777);
+        wrench.copyDirSyncRecursive(dir, testdir, { forceDelete: true, excludeHiddenUnix: false, inflateSymlinks: true });
+
+        var files = wrench.readdirSyncRecursive(testdir);
+
+        checkResultInflateAbsolute(test, files);
+
+        wrench.rmdirSyncRecursive(testdir);
+        fs.unlinkSync(path.join(dir, 'absolute-bar.txt'));
 
         test.done();
     },
