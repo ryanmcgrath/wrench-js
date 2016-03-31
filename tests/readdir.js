@@ -30,6 +30,16 @@ module.exports = testCase({
         checkResult(test, files);
     },
 
+    test_readdirSyncRecursive_filter: function(test) {
+        var dir = path.join(__dirname, 'readdir');
+
+        var txt_files = wrench.readdirSyncRecursive(dir, function (x) {return /\.txt$/.test(x);});
+
+        test.deepEqual(txt_files, ['bar.txt', path.join('foo', 'lorem.txt')]);
+
+        test.done();
+    },
+
     test_readdirRecursive: function(test) {
         var dir = path.join(__dirname, 'readdir');
 

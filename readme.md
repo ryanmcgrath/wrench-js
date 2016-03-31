@@ -66,6 +66,9 @@ wrench.rmdirSyncRecursive('my_directory_name', failSilently);
 // Recursively read directories contents.
 wrench.readdirSyncRecursive('my_directory_name');
 
+// Recursively read directories contents, filter results (efficient memory usage for big folders trees).
+wrench.readdirSyncRecursive('my_directory_name', function (x) { return /\.txt$/.test(x); });
+
 // Recursively chmod the entire sub-tree of a directory
 wrench.chmodSyncRecursive('my_directory_name', 0755);
 
