@@ -78,9 +78,13 @@ function checkResultDontInflate(test, files) {
 function checkResultPreserveFiles(test, files) {
     checkResultHidden(test, files);
     var contents = fs.readFileSync(path.join(__dirname, path.join('testdir2', '.hidden.txt')), "utf8");
-    test.deepEqual(contents, 'hidden file');
+    test.deepEqual(contents, 'hidden file'); // Preserved Content
     contents = fs.readFileSync(path.join(__dirname, path.join('testdir2', 'bar.txt')), "utf8");
-    test.deepEqual(contents, 'shown file');
+    test.deepEqual(contents, 'shown file'); // Preserved Content
+    contents = fs.readFileSync(path.join(__dirname, path.join('testdir2', 'foo/lorem.txt')), "utf8");
+    test.deepEqual(contents, 'Lorem ipsum, please preserve my content.'); // Preserved Content
+    contents = fs.readFileSync(path.join(__dirname, path.join('testdir2', 'foo/dolor.md')), "utf8");
+    test.deepEqual(contents, '#dolor sit amet');  // Copied Content
 }
 
 function checkResultOverwriteFiles(test, files) {
@@ -196,12 +200,19 @@ module.exports = testCase({
         // wrench.mkdirSyncRecursive(testdir1, 0777);
         wrench.copyDirSyncRecursive(dir, testdir1, { excludeHiddenUnix: false });
         wrench.copyDirSyncRecursive(dir, testdir2, { excludeHiddenUnix: false });
+      
+        fs.writeFileSync(path.join(testdir1, '.hidden.txt'), 'just some text for .hidden.txt');
+        fs.writeFileSync(path.join(testdir1, 'bar.txt'), 'just some text for bar.txt');
+        fs.writeFileSync(path.join(testdir1, 'foo/lorem.txt'), 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ');
+        fs.writeFileSync(path.join(testdir1, 'foo/dolor.md'), '#dolor sit amet');
 
-        fs.writeFileSync(path.join(testdir1, ".hidden.txt"), 'just some text for .hidden.txt');
-        fs.writeFileSync(path.join(testdir1, "bar.txt"), 'just some text for bar.txt');
+        wrench.rmdirSyncRecursive(path.join(testdir2, 'foo'));
+        fs.mkdirSync(path.join(testdir2, 'foo'));
+        fs.writeFileSync(path.join(testdir2, 'foo/lorem.txt'), 'Lorem ipsum, please preserve my content.');
 
-        wrench.copyDirSyncRecursive(testdir1, testdir2, { excludeHiddenUnix: false, preserveFiles: true });
-
+        var err = wrench.copyDirSyncRecursive(testdir1, testdir2, { excludeHiddenUnix: false, preserveFiles: true });
+        test.equal(err, undefined, 'Error should not be returned');
+      
         var files = wrench.readdirSyncRecursive(testdir2);
 
         checkResultPreserveFiles(test, files);
